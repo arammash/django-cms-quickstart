@@ -9,5 +9,6 @@ COPY requirements.txt .
 RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-# Force migrations to run right before uWSGI boots up
+# Force Django dev server so we can see the exact error traceback
+EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
