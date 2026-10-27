@@ -277,3 +277,4 @@ LOGGING = {
         "propagate": False,
         },
     }
+}
