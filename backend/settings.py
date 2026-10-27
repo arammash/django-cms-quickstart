@@ -276,5 +276,4 @@ LOGGING = {
         "level": "ERROR",
         "propagate": False,
         },
-    },
-}
+    }
