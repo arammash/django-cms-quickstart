@@ -4,12 +4,16 @@ WORKDIR /app
 
 RUN python -m pip install --upgrade pip
 
-# optimizing the docker caching behaviour
+# Optimize caching behavior
 COPY requirements.txt .
 RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-# RUN python manage.py collectstatic --noinput
+# Copy entrypoint script and make it executable
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
-# Run migrations on startup, then start uWSGI
-CMD ["sh", "-c", "python manage.py migrate && uwsgi --ini wsgi.ini"]
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# Starts uWSGI via the entrypoint script
+CMD ["uwsgi", "--ini", "wsgi.ini"]
