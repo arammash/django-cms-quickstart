@@ -11,4 +11,5 @@ COPY . .
 
 # RUN python manage.py collectstatic --noinput
 
-CMD ["uwsgi", "--ini", "wsgi.ini"]
+# Run migrations on startup, then start uWSGI
+CMD ["sh", "-c", "python manage.py migrate && uwsgi --ini wsgi.ini"]
