@@ -13,11 +13,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '<a string of random characters>')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'aram-masharqa-projects.onrender.com','masharqa.com', '18.156.158.53', '18.156.42.200', '52.59.103.54']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'aram-masharqa-projects.onrender.com', 'www.masharqa.com', 'masharqa.com']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://aram-masharqa-projects.onrender.com',
     'https://masharqa.com',
+    'https://www.masharqa.com',
 ]
 
 # Redirect to HTTPS by default, unless explicitly disabled
