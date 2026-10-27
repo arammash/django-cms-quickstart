@@ -265,11 +265,16 @@ LOGGING = {
         "handlers": ["console"],
         "level": "INFO",
     },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "ERROR",
-            "propagate": False,
+ "loggers": {
+    "django": {
+        "handlers": ["console"],
+        "level": "ERROR",
+        "propagate": False,
+    },
+    "django.request": {
+        "handlers": ["console"],
+        "level": "ERROR",
+        "propagate": False,
         },
     },
 }
