@@ -11,6 +11,7 @@ django-storages==1.14.6
 django-tables2==2.7.0
 django-treebeard==4.7.1
 django-widget-tweaks==1.5.0
+djangocms_admin_style
 factory_boy==3.3.3
 Faker==37.5.3
 furl==2.1.4
