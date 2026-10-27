@@ -15,6 +15,11 @@ DEBUG = os.environ.get('DEBUG') == "True"
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'aram-masharqa-projects.onrender.com','masharqa.com', '18.156.158.53', '18.156.42.200', '52.59.103.54']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://aram-masharqa-projects.onrender.com',
+    'https://masharqa.com',
+]
+
 # Redirect to HTTPS by default, unless explicitly disabled
 SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT') != "False"
 
@@ -37,7 +42,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',  # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
+ 
     # key django CMS modules
     'cms',
     'menus',
@@ -96,7 +101,12 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -150,8 +160,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Configure database using DATABASE_URL; fall back to sqlite in memory when no
 # environment variable is available, e.g. during Docker build
-DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite://:memory:')
-DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
+
+DATABASES = {
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
+}
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # Password validation
@@ -218,7 +231,7 @@ STORAGES = {
 }
 
 # only required for local file storage and serving, in development
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = '/data/media/'
 
 
@@ -230,3 +243,4 @@ CMS_CONFIRM_VERSION4 = True
 DJANGOCMS_VERSIONING_ALLOW_DELETING_VERSIONS = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
