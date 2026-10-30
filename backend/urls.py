@@ -16,3 +16,5 @@ if settings.DEBUG:
 
 # Disable the new Django admin sidebar for better UX with Django CMS custom admin views
 admin.site.enable_nav_sidebar = False
+
+

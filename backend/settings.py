@@ -85,6 +85,8 @@ INSTALLED_APPS = [
     'djangocms_frontend.contrib.image',
     'djangocms_frontend.contrib.tabs',
     'djangocms_frontend.contrib.utilities',
+
+    'exhibitions'
 ]
 
 MIDDLEWARE = [
