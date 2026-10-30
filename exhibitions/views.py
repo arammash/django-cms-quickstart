@@ -1,11 +1,8 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.views.generic import ListView, DetailView
-from .models import Exhibition
+from .models import Project
 
 class ExhibitionList(ListView):
-    model = Exhibition
+    queryset = Project.objects.filter(type=Project.Type.EXHIBITION)
 
 class ExhibitionDetail(DetailView):
-    model = Exhibition
+    queryset = Project.objects.filter(type=Project.Type.EXHIBITION)

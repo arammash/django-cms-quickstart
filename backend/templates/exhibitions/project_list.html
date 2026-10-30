@@ -1,0 +1,12 @@
+{% extends "minimal.html" %}
+{% block content %}
+<h1>Exhibitions</h1>
+<ul>
+  {% for p in object_list %}
+    <li>
+      <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
+      {{ p.start_date|date:"Y" }}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

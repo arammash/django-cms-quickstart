@@ -1,18 +1,18 @@
 from django.contrib import admin
+from .models import Artist, Project, ProjectImage
 
-# Register your models here.
-from .models import Artist, Exhibition, ExhibitionImage
 
-class ExhibitionImageInline(admin.TabularInline):
-    model = ExhibitionImage
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
     extra = 1
 
-@admin.register(Artist)
-class ArtistAdmin(admin.ModelAdmin):
-    list_display = ['name']
 
-@admin.register(Exhibition)
-class ExhibitionAdmin(admin.ModelAdmin):
-    list_display = ['title', 'start_date', 'end_date']
-    prepopulated_fields = {'slug': ('title',)}
-    inlines = [ExhibitionImageInline]
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ("title", "type", "start_date", "end_date")
+    list_filter = ("type",)
+    prepopulated_fields = {"slug": ("title",)}
+    inlines = [ProjectImageInline]
+
+
+admin.site.register(Artist)

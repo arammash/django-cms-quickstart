@@ -1,0 +1,15 @@
+{% extends "minimal.html" %}
+{% block content %}
+<article>
+  <h1>{{ object.title }}</h1>
+  <p>{{ object.start_date|date:"j F Y" }}{% if object.end_date %} to {{ object.end_date|date:"j F Y" }}{% endif %}</p>
+  <p>{% for a in object.artists.all %}{{ a.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  {{ object.text|linebreaks }}
+  {% for img in object.images.all %}
+    <figure>
+      <img src="{{ img.image.url }}" alt="{{ img.caption }}" style="max-width:100%">
+      <figcaption>{{ img.caption }}</figcaption>
+    </figure>
+  {% endfor %}
+</article>
+{% endblock %}

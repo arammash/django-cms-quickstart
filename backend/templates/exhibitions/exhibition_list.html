@@ -1,9 +1,0 @@
-{% extends "minimal.html" %}
-{% block content %}
-    <h1>Exhibitions</h1>
-    <ul>
-        {% for exhibition in object_list %}
-            <li><a href="{% url 'exhibitions:exhibition_detail' exhibition.slug %}">{{ exhibition.title }}</a> ({{ exhibition.start_date }})</li>
-        {% endfor %}
-    </ul>
-{% endblock %}
