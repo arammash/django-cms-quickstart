@@ -231,8 +231,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')  # this is were th
 DEFAULT_STORAGE_DSN = os.environ.get('DEFAULT_STORAGE_DSN', '/data/media/')
 DefaultStorageClass = dsn_configured_storage_class('DEFAULT_STORAGE_DSN')
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 STORAGES = {
     'default': {
         "BACKEND": "storages.backends.s3.S3Storage",        
@@ -246,8 +244,7 @@ STORAGES = {
         }
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-        # 'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",        
     },
 }
 
