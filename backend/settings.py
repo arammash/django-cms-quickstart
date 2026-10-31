@@ -233,7 +233,7 @@ DefaultStorageClass = dsn_configured_storage_class('DEFAULT_STORAGE_DSN')
 
 STORAGES = {
     'default': {
-        "BACKEND": "storages.backends.s3.S3Boto3Storage",        
+        "BACKEND": "storages.backends.s3.S3Storage",     
         "OPTIONS": {
             "access_key": os.environ.get("R2_ACCESS_KEY_ID"),
             "secret_key": os.environ.get("R2_SECRET_ACCESS_KEY"),
@@ -244,8 +244,7 @@ STORAGES = {
         }
     },
     'staticfiles': {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",        
-    },
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",    },
 }
 
 # only required for local file storage and serving, in development

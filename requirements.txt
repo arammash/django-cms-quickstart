@@ -9,7 +9,8 @@ django-parler
 django-treebeard
 django-sekizai
 django-storage-url==0.12.1
-django-storages==1.14.6
+django-storages[s3]==1.14.6
+boto3==1.34.14
 django-tables2==2.7.0
 django-widget-tweaks==1.5.0
 djangocms_admin_style
