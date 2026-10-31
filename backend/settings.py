@@ -152,6 +152,10 @@ CMS_TEMPLATES = [
     # a minimal template to get started with
     ('minimal.html', 'Minimal template'),
 
+    ('site_page.html', 'Standard Page'),
+
+    ('site_home.html', 'Home Page'),
+
     ('whitenoise-static-files-demo.html', 'Static File Demo'),
 ]
 
