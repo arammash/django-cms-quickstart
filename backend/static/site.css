@@ -1,0 +1,14 @@
+body {
+  font-family: Georgia, serif;
+  max-width: 42rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  line-height: 1.5;
+}
+header { display: flex; justify-content: space-between; margin-bottom: 2rem; }
+nav ul { list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0; }
+a { color: inherit; }
+img { max-width: 100%; height: auto; }
+
+.row { display: flex; gap: 2rem; flex-wrap: wrap; }
+.row > .col { flex: 1 1 16rem; }

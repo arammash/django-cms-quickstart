@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load cms_tags menu_tags static djangocms_alias_tags%}
+
+{% block base_css %}
+  <link rel="stylesheet" href="{% static 'site.css' %}">
+{% endblock %}
+
+{% block navbar %}
+<header>
+  {% static_alias 'header' %}
+  <nav>{% show_menu 0 1 100 100 "menu/simple.html" %}</nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<main>
+  <h1>{% page_attribute "page_title" %}</h1>
+  {% placeholder "Content" %}
+  #Important that Content is case-sensititve and matches the placeholder name in the CMS/base.html.
+</main>
+{% endblock %}

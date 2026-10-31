@@ -1,0 +1,12 @@
+{% extends "site_page.html" %}
+{% load cms_tags %}
+
+{% block content %}
+<main>
+  <section class="intro">{% placeholder "Intro" %}</section>
+  <section class="row">
+    <div class="col">{% placeholder "Left" %}</div>
+    <div class="col">{% placeholder "Right" %}</div>
+  </section>
+</main>
+{% endblock %}
