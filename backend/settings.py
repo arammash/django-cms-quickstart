@@ -165,8 +165,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # environment variable is available, e.g. during Docker build
 
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
+    'default': dj_database_url.config(
+        # Uses Render's/Supabase's DATABASE_URL if live, 
+        # but falls back to local SQLite if you're running it on your laptop!
+        default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
+
+# Keep your atomic requests for rock-solid transaction safety
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
