@@ -170,7 +170,8 @@ DATABASES = {
         # but falls back to local SQLite if you're running it on your laptop!
         default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
         conn_max_age=600,
-        ssl_require=True,
+        # Only require SSL if we are using a remote Postgres database (like Supabase)
+        ssl_require=bool(os.environ.get('DATABASE_URL')),
     )
 }
 
