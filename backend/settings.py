@@ -175,8 +175,7 @@ DATABASES = {
         default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
         conn_max_age=600,
         # Only require SSL if we are using a remote Postgres database (like Supabase)
-        ssl_require=bool(os.environ.get('DATABASE_URL')),
-    )
+        ssl_require=os.environ.get('DATABASE_SSL_REQUIRE', 'True').lower() == 'true'),
 }
 
 # Keep your atomic requests for rock-solid transaction safety

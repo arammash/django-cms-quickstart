@@ -8,6 +8,8 @@ services:
       - "./data:/data:rw"
     command: python manage.py runserver 0.0.0.0:8000   # Run Django on port 8000 internally
     env_file: .env-local
+    environment:
+      DATABASE_SSL_REQUIRE: "false"
     networks:
       - djangocmsnet
     depends_on:
