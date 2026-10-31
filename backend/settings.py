@@ -233,7 +233,15 @@ DefaultStorageClass = dsn_configured_storage_class('DEFAULT_STORAGE_DSN')
 
 STORAGES = {
     'default': {
-        'BACKEND': 'backend.settings.DefaultStorageClass',
+        "BACKEND": "storages.backends.s3.S3Storage",        
+        "OPTIONS": {
+            "access_key": os.environ.get("R2_ACCESS_KEY_ID"),
+            "secret_key": os.environ.get("R2_SECRET_ACCESS_KEY"),
+            "bucket_name": os.environ.get("R2_BUCKET_NAME"),
+            "endpoint_url": os.environ.get("R2_ENDPOINT_URL"), # e.g., https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+            "custom_domain": os.environ.get("R2_CUSTOM_DOMAIN"), # optional public domain for your R2 bucket
+            "region_name": "auto",
+        }
     },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
