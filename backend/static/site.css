@@ -5,6 +5,8 @@ body {
   padding: 0 1rem;
   line-height: 1.5;
 }
+h1 { font-family: "Micro 5 Chartered", sans-serif; }
+
 header { display: flex; justify-content: space-between; margin-bottom: 2rem; }
 nav ol { list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0; }
 a { color: inherit; }
@@ -12,3 +14,9 @@ img { max-width: 100%; height: auto; }
 
 .row { display: flex; gap: 2rem; flex-wrap: wrap; }
 .row > .col { flex: 1 1 16rem; }
+
+.micro-5-charted-regular {
+  font-family: "Micro 5 Charted", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
