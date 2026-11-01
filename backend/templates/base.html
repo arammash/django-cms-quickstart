@@ -2,6 +2,9 @@
 {% load cms_tags menu_tags sekizai_tags static i18n djangocms_alias_tags %}
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5+Charted&display=swap" rel="stylesheet">
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -20,11 +23,6 @@
 
     {% block fb_meta %}{% endblock fb_meta %}
     <title>{% block title %}{% page_attribute "page_title" %}{% endblock %}</title>
-
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Micro+5+Charted&display=swap" rel="stylesheet">
-      
     {% block base_css %}
       <link rel="stylesheet" href="{% static 'site.css' %}">
     {% endblock %}
