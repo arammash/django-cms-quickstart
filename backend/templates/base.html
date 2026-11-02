@@ -4,8 +4,7 @@
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Micro+5+Charted&display=swap" rel="stylesheet">
-    <meta charset="utf-8"/>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
@@ -27,6 +26,11 @@
       <link rel="stylesheet" href="{% static 'site.css' %}">
     {% endblock %}
     {% render_block 'css' %}
+    <style>
+      nav a[aria-current="page"] {
+        font-weight: bold;
+      }
+    </style>
     {% block page_head %}{% endblock %}
   </head>
   <body {% block body_attrs %}{% endblock %}>

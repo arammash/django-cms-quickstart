@@ -19,6 +19,7 @@ class Project(models.Model):
     type = models.CharField(max_length=30, choices=Type.choices, default=Type.EXHIBITION)
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
+    location = models.CharField(max_length=200, blank=True)
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
     artists = models.ManyToManyField(Artist, blank=True)
