@@ -22,6 +22,7 @@
 
     {% block fb_meta %}{% endblock fb_meta %}
     <title>{% block title %}{% page_attribute "page_title" %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
     {% block base_css %}
       <link rel="stylesheet" href="{% static 'site.css' %}">
     {% endblock %}
