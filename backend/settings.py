@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import dj_database_url
 from django_storage_url import dsn_configured_storage_class
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -231,6 +232,42 @@ STATICFILES_DIRS = [  # this are were django staticfiles is looking for sources
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')  # this is were the collected files are placed
 
+# Media uploads use local storage unless all R2 connection settings are set.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/data/media/'
+
+R2_REQUIRED_SETTINGS = (
+    "R2_ACCESS_KEY_ID",
+    "R2_SECRET_ACCESS_KEY",
+    "R2_BUCKET_NAME",
+    "R2_ENDPOINT_URL",
+)
+R2_CONFIGURED = all(os.environ.get(name) for name in R2_REQUIRED_SETTINGS)
+if any(os.environ.get(name) for name in R2_REQUIRED_SETTINGS) and not R2_CONFIGURED:
+    raise ImproperlyConfigured(
+        "Set R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, and "
+        "R2_ENDPOINT_URL together."
+    )
+
+if R2_CONFIGURED:
+    MEDIA_STORAGE_BACKEND = "storages.backends.s3.S3Storage"
+    MEDIA_STORAGE_OPTIONS = {
+        "access_key": os.environ["R2_ACCESS_KEY_ID"],
+        "secret_key": os.environ["R2_SECRET_ACCESS_KEY"],
+        "bucket_name": os.environ["R2_BUCKET_NAME"],
+        "endpoint_url": os.environ["R2_ENDPOINT_URL"],
+        "region_name": "auto",
+    }
+    if os.environ.get("R2_CUSTOM_DOMAIN"):
+        MEDIA_STORAGE_OPTIONS["custom_domain"] = os.environ["R2_CUSTOM_DOMAIN"]
+        MEDIA_STORAGE_OPTIONS["querystring_auth"] = False
+else:
+    MEDIA_STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
+    MEDIA_STORAGE_OPTIONS = {
+        "location": MEDIA_ROOT,
+        "base_url": MEDIA_URL,
+    }
+
 # read the setting value from the environment variable. This functionality is
 # provided by https://github.com/divio/django-storage-url
 DEFAULT_STORAGE_DSN = os.environ.get('DEFAULT_STORAGE_DSN', '/data/media/')
@@ -238,23 +275,25 @@ DefaultStorageClass = dsn_configured_storage_class('DEFAULT_STORAGE_DSN')
 
 STORAGES = {
     'default': {
-        "BACKEND": "storages.backends.s3.S3Storage",     
-        "OPTIONS": {
-            "access_key": os.environ.get("R2_ACCESS_KEY_ID"),
-            "secret_key": os.environ.get("R2_SECRET_ACCESS_KEY"),
-            "bucket_name": os.environ.get("R2_BUCKET_NAME"),
-            "endpoint_url": os.environ.get("R2_ENDPOINT_URL"), # e.g., https://<ACCOUNT_ID>.r2.cloudflarestorage.com
-            "custom_domain": os.environ.get("R2_CUSTOM_DOMAIN"), # optional public domain for your R2 bucket
-            "region_name": "auto",
-        }
+        "BACKEND": MEDIA_STORAGE_BACKEND,
+        "OPTIONS": MEDIA_STORAGE_OPTIONS,
     },
     'staticfiles': {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",    },
 }
 
-# only required for local file storage and serving, in development
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/data/media/'
+FILER_STORAGES = {
+    "public": {
+        "main": {
+            "ENGINE": MEDIA_STORAGE_BACKEND,
+            "OPTIONS": MEDIA_STORAGE_OPTIONS,
+        },
+        "thumbnails": {
+            "ENGINE": MEDIA_STORAGE_BACKEND,
+            "OPTIONS": MEDIA_STORAGE_OPTIONS,
+        },
+    },
+}
 
 
 SITE_ID = 1

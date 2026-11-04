@@ -115,6 +115,7 @@ Some deployment hints:
 - To deploy this project in testing mode (recommended) set the environment variable ``DEBUG`` to ``True`` in your hosting environment.
 - Be aware that if ``DEBUG`` is false, django requires you to whitelist the domain. Set the env var ``DOMAIN`` to the host, i.e. ``www.domain.com`` or ``*.domain.com``.
 - You can set the env var ``DEFAULT_STORAGE_DSN`` to something meaningful (i.e. for s3 file storage)
+- Project images use local media storage unless all of ``R2_ACCESS_KEY_ID``, ``R2_SECRET_ACCESS_KEY``, ``R2_BUCKET_NAME``, and ``R2_ENDPOINT_URL`` are set. Set these in the hosting environment to upload images and filer thumbnails to Cloudflare R2. ``R2_CUSTOM_DOMAIN`` is optional for serving public media through a custom domain.
 
 Deployment Commands
 ===================
