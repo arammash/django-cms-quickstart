@@ -2,6 +2,16 @@
 
 {% block content %}
 <main>
+  <section class="home-hero" aria-label="Featured image">
+    {% placeholder "Hero" or %}
+      {% if request.user.is_staff %}
+        <p class="home-hero__empty">
+          To add the landing-page image, switch to Structure in the django CMS toolbar, hover over this area,
+          click Add plugin (+), and choose Image. The ?edit mode only edits project details.
+        </p>
+      {% endif %}
+    {% endplaceholder %}
+  </section>
   <section class="intro">{% placeholder "Intro" %}</section>
   <section class="row">
     <div class="col">{% placeholder "Left" %}</div>

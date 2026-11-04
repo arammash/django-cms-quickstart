@@ -20,9 +20,9 @@ class ExhibitionList(ListView):
         context = super().get_context_data(**kwargs)
         projects = list(context["object_list"])
 
-        context["future_projects"] = [p for p in projects if p.status == "future"]
         context["current_projects"] = [p for p in projects if p.status == "current"]
         context["past_projects"] = [p for p in projects if p.status == "past"]
+        context["future_projects"] = [p for p in projects if p.status == "future"]
         return context
 
 class ExhibitionDetail(DetailView):

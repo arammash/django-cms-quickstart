@@ -38,10 +38,7 @@
     {% cms_toolbar %}
 
     {% if request.frontend_edit_mode %}
-      <div class="frontend-edit-banner">
-        Front-end edit mode: double-click a project to edit it.
-        <a href="{{ request.path }}?edit=off">Exit edit mode</a>
-      </div>
+      <a class="frontend-edit-exit" href="{{ request.path }}?edit=off">Exit edit mode</a>
       <dialog class="frontend-edit-dialog" id="frontend-edit-dialog" aria-labelledby="frontend-edit-title">
         <div class="frontend-edit-dialog__header">
           <h2 id="frontend-edit-title">Edit project</h2>
@@ -63,6 +60,7 @@
     {% render_block 'js' %}
 
     {% block end_js %}{% endblock %}
+    <script src="{% static 'nav_dropdown.js' %}" defer></script>
     {% block bottom_css %}{% endblock %}
 
     {% block footer %}

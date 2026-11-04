@@ -1,6 +1,19 @@
 {% load menu_tags %}
+{% url 'exhibitions:exhibition_list' as exhibitions_url %}
 <ul>
 {% for child in children %}
-  <li><a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}"{% if child.selected %} aria-current="page"{% endif %}>{{ child.get_menu_title }}</a></li>
+  <li{% if child.get_menu_title|lower == "exhibitions" %} class="has-dropdown"{% endif %}>
+    <a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}"{% if child.selected %} aria-current="page"{% endif %}>{{ child.get_menu_title }}</a>
+    {% if child.get_menu_title|lower == "exhibitions" %}
+      <button class="nav-dropdown-toggle" type="button" aria-label="Show exhibition sections" aria-expanded="false">
+        <span class="nav-dropdown-caret" aria-hidden="true"></span>
+      </button>
+      <ul class="nav-dropdown">
+        <li><a href="{{ exhibitions_url }}#past">Past</a></li>
+        <li><a href="{{ exhibitions_url }}#current">Present</a></li>
+        <li><a href="{{ exhibitions_url }}#future">Future</a></li>
+      </ul>
+    {% endif %}
+  </li>
 {% endfor %}
 </ul>

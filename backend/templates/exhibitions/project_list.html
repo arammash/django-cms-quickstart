@@ -1,18 +1,67 @@
 {% extends "site_page.html" %}
 {% block content %}
-<ul class="project-list">
-  {% for p in object_list %}
-    <li
-      class="{{ p.status }}{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
-      {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
-        data-frontend-edit-url="{% url 'admin:exhibitions_project_change' p.pk %}"
-        title="Double-click to edit this project"
-      {% endif %}
-    >
-      <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
-      {{ p.location}},
-      {{ p.start_date|date:"d/m/Y" }}
-    </li>
-  {% endfor %}
-</ul>
+<div class="exhibition-columns">
+  <section class="exhibition-column" id="past">
+    <h2>Past</h2>
+    <ul class="project-list">
+      {% for p in past_projects %}
+        <li
+          class="{{ p.status }}{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
+          {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
+            data-frontend-edit-url="{% url 'admin:exhibitions_project_change' p.pk %}"
+            title="Double-click to edit this project"
+          {% endif %}
+        >
+          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
+          {{ p.location }},
+          {{ p.start_date|date:"d/m/Y" }}
+        </li>
+      {% empty %}
+        <li>No past exhibitions.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="exhibition-column" id="current">
+    <h2>Present</h2>
+    <ul class="project-list">
+      {% for p in current_projects %}
+        <li
+          class="{{ p.status }}{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
+          {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
+            data-frontend-edit-url="{% url 'admin:exhibitions_project_change' p.pk %}"
+            title="Double-click to edit this project"
+          {% endif %}
+        >
+          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
+          {{ p.location }},
+          {{ p.start_date|date:"d/m/Y" }}
+        </li>
+      {% empty %}
+        <li>No current exhibitions.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="exhibition-column" id="future">
+    <h2>Future</h2>
+    <ul class="project-list">
+      {% for p in future_projects %}
+        <li
+          class="{{ p.status }}{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
+          {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
+            data-frontend-edit-url="{% url 'admin:exhibitions_project_change' p.pk %}"
+            title="Double-click to edit this project"
+          {% endif %}
+        >
+          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
+          {{ p.location }},
+          {{ p.start_date|date:"d/m/Y" }}
+        </li>
+      {% empty %}
+        <li>No upcoming exhibitions.</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
 {% endblock %}

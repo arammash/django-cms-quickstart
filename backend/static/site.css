@@ -1,6 +1,6 @@
 body {
   font-family: Georgia, serif;
-  max-width: 42rem;
+  max-width: 70rem;
   margin: 2rem auto;
   padding: 0 1rem;
   line-height: 1.5;
@@ -22,9 +22,64 @@ nav ul {
   padding: 0; 
   font-family: Michroma, sans-serif; 
 }
+nav > ul > li {
+  position: relative;
+}
+.nav-dropdown-toggle {
+  border: 0;
+  padding: 0.25rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.nav-dropdown-caret {
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 0.35rem solid currentColor;
+  border-right: 0.3rem solid transparent;
+  border-left: 0.3rem solid transparent;
+}
+nav .nav-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  top: 100%;
+  left: 0;
+  min-width: 9rem;
+  padding: 0.5rem 0;
+  background: rgb(255 255 255 / 95%);
+  color: #222;
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 18%);
+}
+nav .nav-dropdown li {
+  padding: 0.35rem 0.75rem;
+}
+nav .nav-dropdown a {
+  display: block;
+  color: #222;
+}
+nav .has-dropdown:hover > .nav-dropdown,
+nav .has-dropdown:focus-within > .nav-dropdown,
+nav .has-dropdown.dropdown-open > .nav-dropdown {
+  display: block;
+}
 .project-list {
   list-style: none;
   padding-left: 0;
+}
+.exhibition-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+.exhibition-column h2 {
+  font-family: "Michroma", sans-serif;
+}
+.exhibition-column[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
 }
 a { 
   color: inherit; 
@@ -34,12 +89,40 @@ img {
   max-width: 100%; 
   height: auto; 
 }
+.home-hero img {
+  display: block;
+  width: 100%;
+  height: min(72vh, 52rem);
+  object-fit: cover;
+}
+.home-hero__empty {
+  display: grid;
+  min-height: 16rem;
+  margin: 0;
+  padding: 2rem;
+  place-items: center;
+  background: #f2f2f2;
+  color: #333;
+  text-align: center;
+}
 .row { 
   display: flex; 
   gap: 2rem; 
   flex-wrap: wrap; 
 }
 .row > .col { flex: 1 1 16rem; }
+
+@media (max-width: 760px) {
+  .exhibition-columns {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  nav .nav-dropdown {
+    right: 0;
+    left: auto;
+  }
+}
 
 [data-frontend-edit-url] {
   cursor: pointer;
@@ -60,7 +143,7 @@ img {
   pointer-events: none;
 }
 
-.frontend-edit-banner {
+.frontend-edit-exit {
   position: fixed;
   z-index: 1100;
   right: 1rem;
@@ -68,11 +151,7 @@ img {
   padding: 0.75rem 1rem;
   background: #222;
   color: #fff;
-}
-
-.frontend-edit-banner a {
-  margin-left: 0.75rem;
-  color: inherit;
+  text-decoration: none;
 }
 
 .frontend-edit-dialog {

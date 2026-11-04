@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import RedirectView
 from django.urls import path, include
 from django.apps import apps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', RedirectView.as_view(url='/', permanent=False), name='home-alias'),
 
     # Django CMS URLs catch-all at root
     path('', include('cms.urls')),
@@ -16,5 +18,4 @@ if settings.DEBUG:
 
 # Disable the new Django admin sidebar for better UX with Django CMS custom admin views
 admin.site.enable_nav_sidebar = False
-
 
