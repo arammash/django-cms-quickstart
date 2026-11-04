@@ -1,6 +1,12 @@
 {% extends "site_page.html" %}
 {% block content %}
-<article>
+<article
+  {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
+    class="frontend-editable"
+    data-frontend-edit-url="{% url 'admin:exhibitions_project_change' object.pk %}"
+    title="Double-click to edit this project"
+  {% endif %}
+>
   <h1>{{ object.title }}</h1>
   <p>{{ object.start_date|date:"j F Y" }}{% if object.end_date %} to {{ object.end_date|date:"j F Y" }}{% endif %}</p>
   {% if object.location %}<p>{{ object.location }}</p>{% endif %}

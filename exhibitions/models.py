@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from cms.models.fields import PlaceholderRelationField
 from filer.fields.image import FilerImageField
+from cms.models.pluginmodel import CMSPlugin
 
 class Artist(models.Model):
     name = models.CharField(max_length=200)
@@ -25,6 +27,10 @@ class Project(models.Model):
     end_date = models.DateField(null=True, blank=True)
     artists = models.ManyToManyField(Artist, blank=True)
     text = models.TextField(blank=True)
+    placeholders = PlaceholderRelationField()
+
+    def get_template(self):
+        return "exhibitions/project_detail.html"
 
     class Meta:
         ordering = ["-start_date"]
@@ -52,3 +58,9 @@ class ProjectImage(models.Model):
 
     class Meta:
         ordering = ["order"]
+
+class ProjectPluginModel(CMSPlugin):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="plugins")
+
+    def __str__(self):
+        return f"Project Plugin: {self.project.title}"

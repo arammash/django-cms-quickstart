@@ -2,7 +2,13 @@
 {% block content %}
 <ul class="project-list">
   {% for p in object_list %}
-    <li class="{{ p.status }}">
+    <li
+      class="{{ p.status }}{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
+      {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
+        data-frontend-edit-url="{% url 'admin:exhibitions_project_change' p.pk %}"
+        title="Double-click to edit this project"
+      {% endif %}
+    >
       <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
       {{ p.location}},
       {{ p.start_date|date:"d/m/Y" }}
