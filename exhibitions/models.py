@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 from filer.fields.image import FilerImageField
 
 class Artist(models.Model):
@@ -30,6 +31,14 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def status(self):
+        if self.start_date > timezone.localdate():
+            return "future"
+        if self.end_date is None or self.end_date >= timezone.localdate():
+            return "current"
+        return "past"
 
     def get_absolute_url(self):
         return reverse("exhibitions:exhibition_detail", kwargs={"slug": self.slug})

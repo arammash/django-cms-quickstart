@@ -2,7 +2,7 @@
 {% block content %}
 <ul class="project-list">
   {% for p in object_list %}
-    <li>
+    <li class="{{ p.status }}">
       <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
       {{ p.location}},
       {{ p.start_date|date:"d/m/Y" }}
