@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Project
+from .models import Artist, Project
 from django.shortcuts import get_object_or_404, render
 
 def render_project_detail(request, id):
@@ -31,4 +31,24 @@ class ExhibitionDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         self.request.toolbar.set_object(self.object)
+        return context
+
+
+class ArtistList(ListView):
+    model = Artist
+    template_name = "exhibitions/artist_list.html"
+    context_object_name = "artists"
+
+
+class ArtistDetail(DetailView):
+    model = Artist
+    template_name = "exhibitions/artist_detail.html"
+    context_object_name = "artist"
+
+    def get_queryset(self):
+        return Artist.objects.prefetch_related("project_set__images")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["projects"] = self.object.project_set.all()
         return context

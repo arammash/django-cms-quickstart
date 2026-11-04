@@ -1,0 +1,20 @@
+{% extends "site_page.html" %}
+{% block content %}
+<main class="artists-page">
+  <h1>Artists</h1>
+  <ul class="artist-list">
+    {% for artist in artists %}
+      <li>
+        <a href="{{ artist.get_absolute_url }}">
+          <span>{{ artist.name }}</span>
+          {% if artist.hero_image %}
+            <img class="artist-hover-image" src="{{ artist.hero_image.url }}" alt="" aria-hidden="true">
+          {% endif %}
+        </a>
+      </li>
+    {% empty %}
+      <li>No artists have been added yet.</li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

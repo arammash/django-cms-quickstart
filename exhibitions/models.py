@@ -7,12 +7,23 @@ from cms.models.pluginmodel import CMSPlugin
 
 class Artist(models.Model):
     name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    hero_image = FilerImageField(
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="artist_hero_images",
+    )
 
     class Meta:
         ordering = ["name"]
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("artists:artist_detail", kwargs={"slug": self.slug})
+
 
 class Project(models.Model):
     class Type(models.TextChoices):

@@ -15,4 +15,7 @@ class ProjectAdmin(admin.ModelAdmin):
     inlines = [ProjectImageInline]
 
 
-admin.site.register(Artist)
+@admin.register(Artist)
+class ArtistAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug")
+    prepopulated_fields = {"slug": ("name",)}

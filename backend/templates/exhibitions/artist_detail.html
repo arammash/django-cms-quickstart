@@ -1,0 +1,21 @@
+{% extends "site_page.html" %}
+{% block content %}
+<main class="artist-page">
+  <article>
+    <h1>{{ artist.name }}</h1>
+    {% if artist.hero_image %}
+      <img class="artist-hero-image" src="{{ artist.hero_image.url }}" alt="{{ artist.name }}">
+    {% endif %}
+    <section>
+      <h2>Exhibitions</h2>
+      <ul class="project-list">
+        {% for project in projects %}
+          <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
+        {% empty %}
+          <li>No exhibitions listed.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </article>
+</main>
+{% endblock %}

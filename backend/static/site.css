@@ -69,6 +69,43 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   list-style: none;
   padding-left: 0;
 }
+.artist-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 2rem;
+  padding: 0;
+  list-style: none;
+}
+.artist-list li {
+  position: relative;
+}
+.artist-list a {
+  display: block;
+  width: fit-content;
+}
+.artist-hover-image {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 100%;
+  display: none;
+  width: min(32rem, 60vw);
+  max-height: 65vh;
+  margin-left: 1rem;
+  object-fit: contain;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.artist-list a:hover .artist-hover-image,
+.artist-list a:focus-visible .artist-hover-image {
+  display: block;
+}
+.artist-hero-image {
+  display: block;
+  width: min(100%, 56rem);
+  max-height: 75vh;
+  object-fit: contain;
+}
 .exhibition-columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -116,6 +153,19 @@ img {
   .exhibition-columns {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .artist-list {
+    grid-template-columns: 1fr;
+  }
+
+  .artist-hover-image {
+    position: static;
+    display: none;
+    width: min(100%, 30rem);
+    max-height: 50vh;
+    margin: 0.75rem 0 0;
+    transform: none;
   }
 
   nav .nav-dropdown {

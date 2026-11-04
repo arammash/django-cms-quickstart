@@ -8,3 +8,12 @@ class ExhibitionsApphook(CMSApp):
 
     def get_urls(self, page=None, language=None, **kwargs):
         return ['exhibitions.urls']
+
+
+@apphook_pool.register
+class ArtistsApphook(CMSApp):
+    name = 'Artists'
+    app_name = 'artists'
+
+    def get_urls(self, page=None, language=None, **kwargs):
+        return ['exhibitions.artist_urls']
