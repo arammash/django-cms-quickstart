@@ -1,4 +1,8 @@
 {% extends "site_page.html" %}
+{% load static %}
+{% block base_js %}
+  <script src="{% static 'artist_carousel.js' %}" defer></script>
+{% endblock %}
 {% block content %}
 <article
   class="exhibition-detail{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
@@ -12,11 +16,25 @@
   {% if object.location %}<p>{{ object.location }}</p>{% endif %}
   <p>{% for a in object.artists.all %}{{ a.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
   {{ object.text|linebreaks }}
-  {% for img in object.images.all %}
-    <figure>
-      <img src="{{ img.image.url }}" alt="{{ img.caption }}" style="max-width:100%">
-      <figcaption>{{ img.caption }}</figcaption>
-    </figure>
-  {% endfor %}
+  {% with gallery_images=object.images.all %}
+    {% if gallery_images %}
+      <section class="image-gallery" aria-label="{{ object.title }} image gallery">
+        <div class="image-carousel" data-image-carousel>
+          <div class="image-carousel__slides">
+            {% for img in gallery_images %}
+              <figure class="image-carousel__slide{% if forloop.first %} is-active{% endif %}"{% if not forloop.first %} hidden{% endif %}>
+                <img src="{{ img.image.url }}" alt="{{ img.caption|default:object.title }}">
+                {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+              </figure>
+            {% endfor %}
+          </div>
+          {% if gallery_images|length > 1 %}
+            <button class="image-carousel__arrow image-carousel__arrow--previous" type="button" data-carousel-previous aria-label="Previous image">‹</button>
+            <button class="image-carousel__arrow image-carousel__arrow--next" type="button" data-carousel-next aria-label="Next image">›</button>
+          {% endif %}
+        </div>
+      </section>
+    {% endif %}
+  {% endwith %}
 </article>
 {% endblock %}

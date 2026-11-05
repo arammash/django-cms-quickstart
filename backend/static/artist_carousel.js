@@ -1,5 +1,5 @@
-document.querySelectorAll("[data-artist-carousel]").forEach((carousel) => {
-  const slides = [...carousel.querySelectorAll(".artist-carousel__slide")];
+document.querySelectorAll("[data-image-carousel]").forEach((carousel) => {
+  const slides = [...carousel.querySelectorAll(".image-carousel__slide")];
   if (slides.length < 2) return;
 
   let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));

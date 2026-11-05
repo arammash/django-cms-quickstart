@@ -103,30 +103,30 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   max-height: 75vh;
   object-fit: contain;
 }
-.artist-gallery {
+.image-gallery {
   margin: 2rem auto;
 }
-.artist-carousel {
+.image-carousel {
   position: relative;
   width: min(100%, 56rem);
   margin: 0 auto;
 }
-.artist-carousel__slide {
+.image-carousel__slide {
   margin: 0;
 }
-.artist-carousel__slide[hidden] {
+.image-carousel__slide[hidden] {
   display: none;
 }
-.artist-carousel__slide img {
+.image-carousel__slide img {
   display: block;
   width: 100%;
   max-height: 75vh;
   object-fit: contain;
 }
-.artist-carousel__slide figcaption {
+.image-carousel__slide figcaption {
   margin-top: 0.75rem;
 }
-.artist-carousel__arrow {
+.image-carousel__arrow {
   position: absolute;
   top: 50%;
   display: grid;
@@ -142,10 +142,10 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   font: 2rem/1 Georgia, serif;
   cursor: pointer;
 }
-.artist-carousel__arrow--previous {
+.image-carousel__arrow--previous {
   left: 0.75rem;
 }
-.artist-carousel__arrow--next {
+.image-carousel__arrow--next {
   right: 0.75rem;
 }
 .exhibition-columns {

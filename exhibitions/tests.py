@@ -3,7 +3,9 @@ from django.test import TestCase
 from django.test import override_settings
 from django.urls import reverse
 
-from .models import Artist, Project
+from filer.models import Image as FilerImage
+
+from .models import Artist, Project, ProjectImage
 
 
 @override_settings(
@@ -43,6 +45,49 @@ class ArtistPageTests(TestCase):
         response = self.client.get(self.exhibition_only_artist.get_absolute_url())
 
         self.assertEqual(response.status_code, 404)
+
+
+@override_settings(
+    ROOT_URLCONF="exhibitions.test_urls",
+    STORAGES={
+        **settings.STORAGES,
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    }
+)
+class ExhibitionGalleryTests(TestCase):
+    def test_exhibition_images_render_as_captioned_carousel(self):
+        project = Project.objects.create(
+            title="Gallery Exhibition",
+            slug="gallery-exhibition",
+            start_date="2026-01-01",
+        )
+        for index, caption in enumerate(("First caption", "Second caption"), start=1):
+            image = FilerImage.objects.create(
+                name=f"Gallery image {index}",
+                original_filename=f"gallery-{index}.jpg",
+                file=f"gallery/gallery-{index}.jpg",
+                mime_type="image/jpeg",
+            )
+            ProjectImage.objects.create(
+                project=project,
+                image=image,
+                caption=caption,
+                order=index,
+            )
+
+        response = self.client.get(project.get_absolute_url())
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'data-image-carousel')
+        self.assertContains(response, 'data-carousel-previous')
+        self.assertContains(response, 'data-carousel-next')
+        self.assertContains(response, "First caption")
+        self.assertContains(response, "Second caption")
+        self.assertContains(response, 'src="/media/gallery/gallery-1.jpg"')
+        self.assertRegex(
+            response.content.decode(),
+            r'<figure[^>]*hidden[^>]*>\s*<img[^>]+gallery-2\.jpg',
+        )
 
 
 @override_settings(
