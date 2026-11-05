@@ -49,9 +49,13 @@ class ArtistDetail(DetailView):
     context_object_name = "artist"
 
     def get_queryset(self):
-        return Artist.objects.filter(is_core_artist=True).prefetch_related("project_set__images")
+        return Artist.objects.filter(is_core_artist=True).prefetch_related(
+            "project_set__images",
+            "gallery_images__image",
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["projects"] = self.object.project_set.all()
+        context["gallery_images"] = self.object.gallery_images.all()
         return context

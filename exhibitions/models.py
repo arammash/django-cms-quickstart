@@ -30,6 +30,20 @@ class Artist(models.Model):
         return reverse("artists:artist_detail", kwargs={"slug": self.slug})
 
 
+class ArtistImage(models.Model):
+    artist = models.ForeignKey(Artist, related_name="gallery_images", on_delete=models.CASCADE)
+    image = FilerImageField(on_delete=models.PROTECT)
+    title = models.CharField(max_length=200, blank=True)
+    caption = models.TextField("Caption / description", blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "pk"]
+
+    def __str__(self):
+        return self.title or f"{self.artist} image {self.order + 1}"
+
+
 class Project(models.Model):
     class Type(models.TextChoices):
         EXHIBITION = "exhibition", "Exhibition"

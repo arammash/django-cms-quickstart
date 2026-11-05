@@ -51,6 +51,34 @@ class ArtistPageTests(TestCase):
         "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
     }
 )
+class ArtistGalleryAdminTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+
+        user = get_user_model().objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="password",
+        )
+        self.client.force_login(user)
+        self.artist = Artist.objects.create(name="Gallery Artist", slug="gallery-artist")
+
+    def test_artist_edit_form_includes_gallery_image_caption_fields(self):
+        response = self.client.get(
+            reverse("admin:exhibitions_artist_change", args=[self.artist.pk])
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Caption / description")
+        self.assertContains(response, "gallery_images-TOTAL_FORMS")
+
+
+@override_settings(
+    STORAGES={
+        **settings.STORAGES,
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    }
+)
 class ToolbarModalSaveTests(TestCase):
     def setUp(self):
         from django.contrib.auth import get_user_model
@@ -65,7 +93,13 @@ class ToolbarModalSaveTests(TestCase):
     def test_saving_artist_from_toolbar_modal_closes_modal(self):
         response = self.client.post(
             f"{reverse('admin:exhibitions_artist_add')}?cms_modal=1",
-            {"name": "Modal Artist", "slug": "modal-artist", "_save": "Save"},
+            {
+                "name": "Modal Artist",
+                "slug": "modal-artist",
+                "gallery_images-TOTAL_FORMS": "0",
+                "gallery_images-INITIAL_FORMS": "0",
+                "_save": "Save",
+            },
         )
 
         self.assertEqual(response.status_code, 200)
@@ -86,7 +120,13 @@ class ToolbarModalSaveTests(TestCase):
     def test_save_and_continue_keeps_artist_form_open(self):
         response = self.client.post(
             f"{reverse('admin:exhibitions_artist_add')}?cms_modal=1",
-            {"name": "Continuing Artist", "slug": "continuing-artist", "_continue": "Save"},
+            {
+                "name": "Continuing Artist",
+                "slug": "continuing-artist",
+                "gallery_images-TOTAL_FORMS": "0",
+                "gallery_images-INITIAL_FORMS": "0",
+                "_continue": "Save",
+            },
         )
 
         self.assertEqual(response.status_code, 302)
@@ -99,7 +139,13 @@ class ToolbarModalSaveTests(TestCase):
     def test_save_and_add_another_keeps_artist_form_open(self):
         response = self.client.post(
             f"{reverse('admin:exhibitions_artist_add')}?cms_modal=1",
-            {"name": "First Artist", "slug": "first-artist", "_addanother": "Save"},
+            {
+                "name": "First Artist",
+                "slug": "first-artist",
+                "gallery_images-TOTAL_FORMS": "0",
+                "gallery_images-INITIAL_FORMS": "0",
+                "_addanother": "Save",
+            },
         )
 
         self.assertEqual(response.status_code, 302)

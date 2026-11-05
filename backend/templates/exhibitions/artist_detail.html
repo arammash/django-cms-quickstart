@@ -1,10 +1,34 @@
 {% extends "site_page.html" %}
+{% load static %}
+{% block base_js %}
+  <script src="{% static 'artist_carousel.js' %}" defer></script>
+{% endblock %}
 {% block content %}
 <main class="artist-page">
   <article>
     <h1>{{ artist.name }}</h1>
     {% if artist.hero_image %}
       <img class="artist-hero-image" src="{{ artist.hero_image.url }}" alt="{{ artist.name }}">
+    {% endif %}
+    {% if gallery_images %}
+      <section class="artist-gallery" aria-label="{{ artist.name }} image gallery">
+        <div class="artist-carousel" data-artist-carousel>
+          <div class="artist-carousel__slides">
+            {% for gallery_image in gallery_images %}
+              <figure class="artist-carousel__slide{% if forloop.first %} is-active{% endif %}"{% if not forloop.first %} hidden{% endif %}>
+                <img src="{{ gallery_image.image.url }}" alt="{{ gallery_image.title|default:artist.name }}">
+                {% if gallery_image.caption %}
+                  <figcaption>{{ gallery_image.caption|linebreaksbr }}</figcaption>
+                {% endif %}
+              </figure>
+            {% endfor %}
+          </div>
+          {% if gallery_images|length > 1 %}
+            <button class="artist-carousel__arrow artist-carousel__arrow--previous" type="button" data-carousel-previous aria-label="Previous image">‹</button>
+            <button class="artist-carousel__arrow artist-carousel__arrow--next" type="button" data-carousel-next aria-label="Next image">›</button>
+          {% endif %}
+        </div>
+      </section>
     {% endif %}
     <section>
       <h2>Exhibitions</h2>
