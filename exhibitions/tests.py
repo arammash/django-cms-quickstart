@@ -72,6 +72,17 @@ class ToolbarModalSaveTests(TestCase):
         self.assertIn(".cms-modal-close", response.content.decode())
         self.assertTrue(Artist.objects.filter(slug="modal-artist").exists())
 
+    def test_artist_admin_list_name_links_to_edit_form(self):
+        artist = Artist.objects.create(name="Linked Artist", slug="linked-artist")
+
+        response = self.client.get(reverse("admin:exhibitions_artist_changelist"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            f'href="{reverse("admin:exhibitions_artist_change", args=[artist.pk])}"',
+        )
+
     def test_save_and_continue_keeps_artist_form_open(self):
         response = self.client.post(
             f"{reverse('admin:exhibitions_artist_add')}?cms_modal=1",

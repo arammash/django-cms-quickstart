@@ -18,7 +18,7 @@ class ItemsToolbar(CMSToolbar):
             url=f"{reverse('admin:exhibitions_project_add')}?cms_modal=1",
         )
         menu.add_break()
-        menu.add_sideframe_item(_("Artists"), url=reverse("admin:exhibitions_artist_changelist"))
+        menu.add_link_item(_("Artists"), url=reverse("admin:exhibitions_artist_changelist"))
         menu.add_modal_item(
             _("Add artist"),
             url=f"{reverse('admin:exhibitions_artist_add')}?cms_modal=1",

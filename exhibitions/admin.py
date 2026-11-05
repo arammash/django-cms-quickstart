@@ -53,5 +53,6 @@ class ProjectAdmin(CloseToolbarModalOnSaveMixin, admin.ModelAdmin):
 @admin.register(Artist)
 class ArtistAdmin(CloseToolbarModalOnSaveMixin, admin.ModelAdmin):
     list_display = ("name", "slug", "is_core_artist")
+    list_display_links = ("name",)
     list_filter = ("is_core_artist",)
     prepopulated_fields = {"slug": ("name",)}
