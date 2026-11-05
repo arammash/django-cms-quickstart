@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from filer.models import Image as FilerImage
 
-from .models import Artist, Project, ProjectImage
+from .models import Artist, ArtistExternalLink, ArtistImage, Project, ProjectImage
 
 
 @override_settings(
@@ -40,6 +40,78 @@ class ArtistPageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Alex Artist")
+
+    def test_artist_profile_sections_and_external_links_render(self):
+        self.artist.bio = "A short artist biography."
+        self.artist.website_url = "https://artist.example.com/"
+        self.artist.instagram_url = "https://instagram.com/artist"
+        self.artist.cv_url = "https://artist.example.com/cv"
+        self.artist.save()
+        solo = Project.objects.create(
+            title="Solo Exhibition",
+            slug="solo-exhibition",
+            start_date="2025-01-01",
+        )
+        solo.artists.add(self.artist)
+        group = Project.objects.create(
+            title="Group Exhibition",
+            slug="group-exhibition",
+            start_date="2024-01-01",
+        )
+        group.artists.add(self.artist, self.exhibition_only_artist)
+        ArtistExternalLink.objects.create(
+            artist=self.artist,
+            title="Interview",
+            url="https://example.com/interview",
+        )
+
+        response = self.client.get(self.artist.get_absolute_url())
+
+        self.assertEqual(response.status_code, 200)
+        for content in (
+            "A short artist biography.",
+            "Website",
+            "Instagram",
+            "Biography",
+            "Solo exhibitions",
+            "Group exhibitions",
+            "CV",
+            "Explore",
+            "Solo Exhibition",
+            "Group Exhibition",
+            "Interview",
+        ):
+            self.assertContains(response, content)
+
+    def test_artist_carousel_starts_with_hero_image(self):
+        hero = FilerImage.objects.create(
+            name="Hero image",
+            original_filename="hero.jpg",
+            file="artists/hero.jpg",
+            mime_type="image/jpeg",
+        )
+        gallery = FilerImage.objects.create(
+            name="Gallery image",
+            original_filename="gallery.jpg",
+            file="artists/gallery.jpg",
+            mime_type="image/jpeg",
+        )
+        self.artist.hero_image = hero
+        self.artist.save()
+        ArtistImage.objects.create(
+            artist=self.artist,
+            image=gallery,
+            caption="Gallery caption",
+        )
+
+        response = self.client.get(self.artist.get_absolute_url())
+
+        self.assertEqual(response.status_code, 200)
+        self.assertRegex(
+            response.content.decode(),
+            r'<figure class="image-carousel__slide is-active">\s*<img[^>]+/media/artists/hero\.jpg',
+        )
+        self.assertContains(response, "/media/artists/gallery.jpg")
 
     def test_exhibition_only_artist_has_no_public_artist_page(self):
         response = self.client.get(self.exhibition_only_artist.get_absolute_url())
@@ -116,6 +188,7 @@ class ArtistGalleryAdminTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Caption / description")
         self.assertContains(response, "gallery_images-TOTAL_FORMS")
+        self.assertContains(response, "external_links-TOTAL_FORMS")
 
 
 @override_settings(
@@ -143,6 +216,8 @@ class ToolbarModalSaveTests(TestCase):
                 "slug": "modal-artist",
                 "gallery_images-TOTAL_FORMS": "0",
                 "gallery_images-INITIAL_FORMS": "0",
+                "external_links-TOTAL_FORMS": "0",
+                "external_links-INITIAL_FORMS": "0",
                 "_save": "Save",
             },
         )
@@ -170,6 +245,8 @@ class ToolbarModalSaveTests(TestCase):
                 "slug": "continuing-artist",
                 "gallery_images-TOTAL_FORMS": "0",
                 "gallery_images-INITIAL_FORMS": "0",
+                "external_links-TOTAL_FORMS": "0",
+                "external_links-INITIAL_FORMS": "0",
                 "_continue": "Save",
             },
         )
@@ -189,6 +266,8 @@ class ToolbarModalSaveTests(TestCase):
                 "slug": "first-artist",
                 "gallery_images-TOTAL_FORMS": "0",
                 "gallery_images-INITIAL_FORMS": "0",
+                "external_links-TOTAL_FORMS": "0",
+                "external_links-INITIAL_FORMS": "0",
                 "_addanother": "Save",
             },
         )

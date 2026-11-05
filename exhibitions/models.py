@@ -13,6 +13,11 @@ class Artist(models.Model):
         default=False,
         help_text="Show this artist in the public Artists section.",
     )
+    bio = models.TextField("Biography", blank=True)
+    website_url = models.URLField("Website", blank=True)
+    instagram_url = models.URLField("Instagram", blank=True)
+    cv_url = models.URLField("CV link", blank=True)
+    cv_file = models.FileField("CV PDF", upload_to="artist-cvs/", blank=True)
     hero_image = FilerImageField(
         blank=True,
         null=True,
@@ -28,6 +33,19 @@ class Artist(models.Model):
 
     def get_absolute_url(self):
         return reverse("artists:artist_detail", kwargs={"slug": self.slug})
+
+
+class ArtistExternalLink(models.Model):
+    artist = models.ForeignKey(Artist, related_name="external_links", on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    url = models.URLField()
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "pk"]
+
+    def __str__(self):
+        return f"{self.artist}: {self.title}"
 
 
 class ArtistImage(models.Model):

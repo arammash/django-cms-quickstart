@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Artist, ArtistImage, Project, ProjectImage
+from .models import Artist, ArtistExternalLink, ArtistImage, Project, ProjectImage
 
 
 class CloseToolbarModalOnSaveMixin:
@@ -48,6 +48,12 @@ class ArtistImageInline(admin.TabularInline):
     fields = ("image", "title", "caption", "order")
 
 
+class ArtistExternalLinkInline(admin.TabularInline):
+    model = ArtistExternalLink
+    extra = 1
+    fields = ("title", "url", "order")
+
+
 @admin.register(Project)
 class ProjectAdmin(CloseToolbarModalOnSaveMixin, admin.ModelAdmin):
     list_display = ("title", "type", "location", "start_date", "end_date", "status")
@@ -62,4 +68,4 @@ class ArtistAdmin(CloseToolbarModalOnSaveMixin, admin.ModelAdmin):
     list_display_links = ("name",)
     list_filter = ("is_core_artist",)
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [ArtistImageInline]
+    inlines = [ArtistImageInline, ArtistExternalLinkInline]

@@ -4,7 +4,7 @@ body {
   margin: 2rem auto;
   padding: 0 1rem;
   line-height: 1.5;
-  background-color: #003300;
+  background-color: #333;
   color: #fff;
 }
 h1 { 
@@ -103,12 +103,65 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   max-height: 75vh;
   object-fit: contain;
 }
+.artist-profile-top {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 2rem;
+}
+.artist-intro {
+  text-align: left;
+}
+.artist-intro h1 {
+  margin-top: 0;
+}
+.artist-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.artist-social-links a {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid currentColor;
+  text-decoration: none;
+}
+.artist-biography {
+  margin-bottom: 1.5rem;
+}
+.artist-contents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0;
+  list-style: none;
+  font-family: Georgia, serif;
+}
+.artist-contents a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.artist-gallery {
+  min-width: 0;
+  margin: 0;
+}
+.artist-profile-sections {
+  margin-top: 3rem;
+  text-align: left;
+}
+.artist-profile-sections section {
+  margin-top: 2.5rem;
+  scroll-margin-top: 1rem;
+}
+.artist-profile-sections h2 {
+  font-family: "Michroma", sans-serif;
+}
 .image-gallery {
   margin: 2rem auto;
 }
 .image-carousel {
   position: relative;
-  width: min(100%, 56rem);
+  width: 100%;
   margin: 0 auto;
 }
 .image-carousel__slide {
@@ -125,6 +178,9 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 }
 .image-carousel__slide figcaption {
   margin-top: 0.75rem;
+}
+figcaption {
+  font-size: 0.8333em;
 }
 .image-carousel__arrow {
   position: absolute;
@@ -154,8 +210,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   gap: 2rem;
 }
 .exhibition-page,
-.exhibition-detail,
-.artist-page {
+.exhibition-detail {
   text-align: center;
 }
 .exhibition-column h2 {
@@ -187,6 +242,14 @@ img {
 .row > .col { flex: 1 1 16rem; }
 
 @media (max-width: 760px) {
+  .artist-profile-top {
+    grid-template-columns: 1fr;
+  }
+
+  .artist-profile-sections {
+    margin-top: 2rem;
+  }
+
   .exhibition-columns {
     grid-template-columns: 1fr;
     gap: 1rem;

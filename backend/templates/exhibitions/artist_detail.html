@@ -5,41 +5,106 @@
 {% endblock %}
 {% block content %}
 <main class="artist-page">
-  <article>
-    <h1>{{ artist.name }}</h1>
-    {% if artist.hero_image %}
-      <img class="artist-hero-image" src="{{ artist.hero_image.url }}" alt="{{ artist.name }}">
-    {% endif %}
-    {% if gallery_images %}
-      <section class="image-gallery" aria-label="{{ artist.name }} image gallery">
-        <div class="image-carousel" data-image-carousel>
-          <div class="image-carousel__slides">
-            {% for gallery_image in gallery_images %}
-              <figure class="image-carousel__slide{% if forloop.first %} is-active{% endif %}"{% if not forloop.first %} hidden{% endif %}>
-                <img src="{{ gallery_image.image.url }}" alt="{{ gallery_image.title|default:artist.name }}">
-                {% if gallery_image.caption %}
-                  <figcaption>{{ gallery_image.caption|linebreaksbr }}</figcaption>
-                {% endif %}
-              </figure>
-            {% endfor %}
+  <article class="artist-profile">
+    <div class="artist-profile-top">
+      <div class="artist-intro">
+        <h1>{{ artist.name }}</h1>
+        {% if artist.website_url or artist.instagram_url %}
+          <div class="artist-social-links">
+            {% if artist.website_url %}
+              <a href="{{ artist.website_url }}" target="_blank" rel="noopener noreferrer">Website</a>
+            {% endif %}
+            {% if artist.instagram_url %}
+              <a href="{{ artist.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+            {% endif %}
           </div>
-          {% if gallery_images|length > 1 %}
-            <button class="image-carousel__arrow image-carousel__arrow--previous" type="button" data-carousel-previous aria-label="Previous image">‹</button>
-            <button class="image-carousel__arrow image-carousel__arrow--next" type="button" data-carousel-next aria-label="Next image">›</button>
-          {% endif %}
-        </div>
-      </section>
-    {% endif %}
-    <section>
-      <h2>Exhibitions</h2>
-      <ul class="project-list">
-        {% for project in projects %}
-          <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
-        {% empty %}
-          <li>No exhibitions listed.</li>
-        {% endfor %}
-      </ul>
-    </section>
+        {% endif %}
+
+        <section class="artist-biography" id="biography">
+          {% if artist.bio %}{{ artist.bio|linebreaks }}{% endif %}
+        </section>
+
+        <nav class="artist-contents" aria-label="Artist page contents">
+          <ul>
+            <li><a href="#biography">Biography</a></li>
+            {% if solo_exhibitions %}
+              <li><a href="#solo-exhibitions">Solo exhibitions</a></li>
+            {% endif %}
+            {% if group_exhibitions %}
+              <li><a href="#group-exhibitions">Group exhibitions</a></li>
+            {% endif %}
+            {% if artist.cv_url or artist.cv_file %}
+              <li><a href="#cv">CV</a></li>
+            {% endif %}
+            {% if external_links %}
+              <li><a href="#explore">Explore</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+
+      {% if carousel_images %}
+        <section class="image-gallery artist-gallery" aria-label="{{ artist.name }} image gallery">
+          <div class="image-carousel" data-image-carousel>
+            <div class="image-carousel__slides">
+              {% for image in carousel_images %}
+                <figure class="image-carousel__slide{% if forloop.first %} is-active{% endif %}"{% if not forloop.first %} hidden{% endif %}>
+                  <img src="{{ image.url }}" alt="{{ image.alt }}">
+                  {% if image.caption %}<figcaption>{{ image.caption|linebreaksbr }}</figcaption>{% endif %}
+                </figure>
+              {% endfor %}
+            </div>
+            {% if carousel_images|length > 1 %}
+              <button class="image-carousel__arrow image-carousel__arrow--previous" type="button" data-carousel-previous aria-label="Previous image">‹</button>
+              <button class="image-carousel__arrow image-carousel__arrow--next" type="button" data-carousel-next aria-label="Next image">›</button>
+            {% endif %}
+          </div>
+        </section>
+      {% endif %}
+    </div>
+
+    <div class="artist-profile-sections">
+      {% if solo_exhibitions %}
+        <section id="solo-exhibitions">
+          <h2>Solo exhibitions</h2>
+          <ul class="project-list">
+            {% for project in solo_exhibitions %}
+              <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if group_exhibitions %}
+        <section id="group-exhibitions">
+          <h2>Group exhibitions</h2>
+          <ul class="project-list">
+            {% for project in group_exhibitions %}
+              <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if artist.cv_url or artist.cv_file %}
+        <section id="cv">
+          <h2>CV</h2>
+          {% if artist.cv_url %}<p><a href="{{ artist.cv_url }}" target="_blank" rel="noopener noreferrer">View CV online</a></p>{% endif %}
+          {% if artist.cv_file %}<p><a href="{{ artist.cv_file.url }}" target="_blank" rel="noopener noreferrer">Download CV (PDF)</a></p>{% endif %}
+        </section>
+      {% endif %}
+
+      {% if external_links %}
+        <section id="explore">
+          <h2>Explore</h2>
+          <ul class="project-list">
+            {% for link in external_links %}
+              <li><a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+    </div>
   </article>
 </main>
 {% endblock %}

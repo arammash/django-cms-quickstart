@@ -51,11 +51,38 @@ class ArtistDetail(DetailView):
     def get_queryset(self):
         return Artist.objects.filter(is_core_artist=True).prefetch_related(
             "project_set__images",
+            "project_set__artists",
             "gallery_images__image",
+            "external_links",
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["projects"] = self.object.project_set.all()
-        context["gallery_images"] = self.object.gallery_images.all()
+        projects = list(self.object.project_set.all())
+        context["solo_exhibitions"] = [
+            project for project in projects if project.artists.count() == 1
+        ]
+        context["group_exhibitions"] = [
+            project for project in projects if project.artists.count() != 1
+        ]
+        context["external_links"] = self.object.external_links.all()
+
+        carousel_images = []
+        if self.object.hero_image:
+            carousel_images.append(
+                {
+                    "url": self.object.hero_image.url,
+                    "alt": self.object.hero_image.default_alt_text or self.object.name,
+                    "caption": self.object.hero_image.default_caption,
+                }
+            )
+        carousel_images.extend(
+            {
+                "url": gallery_image.image.url,
+                "alt": gallery_image.title or self.object.name,
+                "caption": gallery_image.caption,
+            }
+            for gallery_image in self.object.gallery_images.all()
+        )
+        context["carousel_images"] = carousel_images
         return context
