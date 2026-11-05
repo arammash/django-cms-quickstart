@@ -1,4 +1,8 @@
 {% extends "site_page.html" %}
+{% load static %}
+{% block base_js %}
+  <script src="{% static 'artist_hover.js' %}" defer></script>
+{% endblock %}
 {% block content %}
 <main class="artists-page">
   <h1>Artists</h1>

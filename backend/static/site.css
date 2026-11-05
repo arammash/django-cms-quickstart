@@ -86,20 +86,15 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   width: fit-content;
 }
 .artist-hover-image {
-  position: absolute;
+  position: fixed;
   z-index: 10;
-  top: 50%;
-  left: 100%;
   display: none;
-  width: min(32rem, 60vw);
-  max-height: 65vh;
-  margin-left: 1rem;
+  width: min(16rem, 30vw);
+  max-height: 32.5vh;
   object-fit: contain;
-  transform: translateY(-50%);
   pointer-events: none;
 }
-.artist-list a:hover .artist-hover-image,
-.artist-list a:focus-visible .artist-hover-image {
+.artist-hover-image.is-visible {
   display: block;
 }
 .artist-hero-image {
@@ -152,12 +147,8 @@ img {
   }
 
   .artist-hover-image {
-    position: static;
-    display: none;
-    width: min(100%, 30rem);
+    width: min(16rem, calc(100vw - 1rem));
     max-height: 50vh;
-    margin: 0.75rem 0 0;
-    transform: none;
   }
 
   nav .nav-dropdown {
