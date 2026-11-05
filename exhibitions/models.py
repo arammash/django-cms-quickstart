@@ -8,6 +8,11 @@ from cms.models.pluginmodel import CMSPlugin
 class Artist(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
+    is_core_artist = models.BooleanField(
+        "Core artist",
+        default=False,
+        help_text="Show this artist in the public Artists section.",
+    )
     hero_image = FilerImageField(
         blank=True,
         null=True,

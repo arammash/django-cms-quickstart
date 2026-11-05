@@ -39,6 +39,9 @@ class ArtistList(ListView):
     template_name = "exhibitions/artist_list.html"
     context_object_name = "artists"
 
+    def get_queryset(self):
+        return Artist.objects.filter(is_core_artist=True)
+
 
 class ArtistDetail(DetailView):
     model = Artist
@@ -46,7 +49,7 @@ class ArtistDetail(DetailView):
     context_object_name = "artist"
 
     def get_queryset(self):
-        return Artist.objects.prefetch_related("project_set__images")
+        return Artist.objects.filter(is_core_artist=True).prefetch_related("project_set__images")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

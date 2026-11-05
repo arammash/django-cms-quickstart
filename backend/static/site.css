@@ -108,6 +108,10 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2rem;
 }
+.exhibition-page,
+.exhibition-detail {
+  text-align: center;
+}
 .exhibition-column h2 {
   font-family: "Michroma", sans-serif;
 }

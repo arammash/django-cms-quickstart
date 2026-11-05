@@ -1,9 +1,9 @@
 {% extends "site_page.html" %}
 {% block content %}
 <article
+  class="exhibition-detail{% if request.frontend_edit_mode and perms.exhibitions.change_project %} frontend-editable{% endif %}"
   {% if request.frontend_edit_mode and perms.exhibitions.change_project %}
-    class="frontend-editable"
-    data-frontend-edit-url="{% url 'admin:exhibitions_project_change' object.pk %}"
+    data-frontend-edit-url="{% url 'admin:exhibitions_project_change' object.pk %}?cms_modal=1"
     title="Double-click to edit this project"
   {% endif %}
 >
