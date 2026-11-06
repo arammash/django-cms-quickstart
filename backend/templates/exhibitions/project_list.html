@@ -12,9 +12,18 @@
             title="Double-click to edit this project"
           {% endif %}
         >
-          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
-          {{ p.location }},
-          {{ p.start_date|date:"d/m/Y" }}
+          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a><br>
+          <span class="project-dates">
+            {% if p.end_date %}
+              {% if p.start_date|date:"y" == p.end_date|date:"y" %}
+                {{ p.start_date|date:"d/m" }} - {{ p.end_date|date:"d/m/y" }}
+              {% else %}
+                {{ p.start_date|date:"d/m/y" }} - {{ p.end_date|date:"d/m/y" }}
+              {% endif %}
+            {% else %}
+              {{ p.start_date|date:"d/m/y" }}
+            {% endif %}
+          </span>
         </li>
       {% empty %}
         <li>No past exhibitions.</li>
@@ -33,9 +42,18 @@
             title="Double-click to edit this project"
           {% endif %}
         >
-          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
-          {{ p.location }},
-          {{ p.start_date|date:"d/m/Y" }}
+          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a><br>
+          <span class="project-dates">
+            {% if p.end_date %}
+              {% if p.start_date|date:"y" == p.end_date|date:"y" %}
+                {{ p.start_date|date:"d/m" }} - {{ p.end_date|date:"d/m/y" }}
+              {% else %}
+                {{ p.start_date|date:"d/m/y" }} - {{ p.end_date|date:"d/m/y" }}
+              {% endif %}
+            {% else %}
+              {{ p.start_date|date:"d/m/y" }}
+            {% endif %}
+          </span>
         </li>
       {% empty %}
         <li>No current exhibitions.</li>
@@ -54,9 +72,18 @@
             title="Double-click to edit this project"
           {% endif %}
         >
-          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a>,
-          {{ p.location }},
-          {{ p.start_date|date:"d/m/Y" }}
+          <a href="{{ p.get_absolute_url }}">{{ p.title }}</a><br>
+          <span class="project-dates">
+            {% if p.end_date %}
+              {% if p.start_date|date:"y" == p.end_date|date:"y" %}
+                {{ p.start_date|date:"d/m" }} - {{ p.end_date|date:"d/m/y" }}
+              {% else %}
+                {{ p.start_date|date:"d/m/y" }} - {{ p.end_date|date:"d/m/y" }}
+              {% endif %}
+            {% else %}
+              {{ p.start_date|date:"d/m/y" }}
+            {% endif %}
+          </span>
         </li>
       {% empty %}
         <li>No upcoming exhibitions.</li>

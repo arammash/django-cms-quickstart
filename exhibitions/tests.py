@@ -145,6 +145,33 @@ class ArtistPageTests(TestCase):
     }
 )
 class ExhibitionGalleryTests(TestCase):
+    def test_exhibition_list_shows_titles_and_date_ranges_without_locations(self):
+        Project.objects.create(
+            title="Upcoming Exhibition",
+            slug="upcoming-exhibition",
+            location="Hidden Gallery",
+            start_date="2027-01-02",
+            end_date="2027-01-05",
+        )
+        Project.objects.create(
+            title="New Year Exhibition",
+            slug="new-year-exhibition",
+            start_date="2027-12-29",
+            end_date="2028-01-03",
+        )
+
+        response = self.client.get(reverse("exhibitions:exhibition_list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Upcoming Exhibition")
+        self.assertContains(response, "02/01 - 05/01/27")
+        self.assertContains(response, "29/12/27 - 03/01/28")
+        self.assertNotContains(response, "Hidden Gallery")
+        self.assertRegex(
+            response.content.decode(),
+            r'<a href="/testing/upcoming-exhibition/">Upcoming Exhibition</a><br>\s*<span class="project-dates">\s*02/01 - 05/01/27',
+        )
+
     def test_exhibition_images_render_as_captioned_carousel(self):
         project = Project.objects.create(
             title="Gallery Exhibition",

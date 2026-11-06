@@ -90,6 +90,12 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   list-style: none;
   padding-left: 0;
 }
+.exhibition-page .project-list li {
+  margin-bottom: 1rem;
+}
+.exhibition-page .project-dates {
+  font-size: 0.9em;
+}
 .artist-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
