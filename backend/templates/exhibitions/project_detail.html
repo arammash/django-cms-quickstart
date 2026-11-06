@@ -1,5 +1,5 @@
 {% extends "site_page.html" %}
-{% load static %}
+{% load static thumbnail %}
 {% block base_js %}
   <script src="{% static 'artist_carousel.js' %}" defer></script>
 {% endblock %}
@@ -23,7 +23,13 @@
           <div class="image-carousel__slides">
             {% for img in gallery_images %}
               <figure class="image-carousel__slide{% if forloop.first %} is-active{% endif %}"{% if not forloop.first %} hidden{% endif %}>
-                <img src="{{ img.image.url }}" alt="{{ img.caption|default:object.title }}">
+                {% thumbnail img.image.file 1600x1200 upscale=False quality=85 as thumbnail %}
+                <img
+                  src="{% if thumbnail %}{{ thumbnail.url }}{% else %}{{ img.image.url }}{% endif %}"
+                  {% if thumbnail %}width="{{ thumbnail.width }}" height="{{ thumbnail.height }}"{% endif %}
+                  alt="{{ img.caption|default:object.title }}"
+                  {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                >
                 {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
               </figure>
             {% endfor %}

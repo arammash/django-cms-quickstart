@@ -65,14 +65,14 @@ class ArtistDetail(DetailView):
         if self.object.hero_image:
             carousel_images.append(
                 {
-                    "url": self.object.hero_image.url,
+                    "file": self.object.hero_image.file,
                     "alt": self.object.hero_image.default_alt_text or self.object.name,
                     "caption": self.object.hero_image.default_caption,
                 }
             )
         carousel_images.extend(
             {
-                "url": gallery_image.image.url,
+                "file": gallery_image.image.file,
                 "alt": gallery_image.title or self.object.name,
                 "caption": gallery_image.caption,
             }
