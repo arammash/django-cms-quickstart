@@ -58,13 +58,7 @@ class ArtistDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        projects = list(self.object.project_set.all())
-        context["solo_exhibitions"] = [
-            project for project in projects if project.artists.count() == 1
-        ]
-        context["group_exhibitions"] = [
-            project for project in projects if project.artists.count() != 1
-        ]
+        context["projects"] = self.object.project_set.all()
         context["external_links"] = self.object.external_links.all()
 
         carousel_images = []

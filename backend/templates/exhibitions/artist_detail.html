@@ -5,7 +5,13 @@
 {% endblock %}
 {% block content %}
 <main class="artist-page">
-  <article class="artist-profile">
+  <article
+    class="artist-profile{% if request.frontend_edit_mode and perms.exhibitions.change_artist %} frontend-editable{% endif %}"
+    {% if request.frontend_edit_mode and perms.exhibitions.change_artist %}
+      data-frontend-edit-url="{% url 'admin:exhibitions_artist_change' artist.pk %}?cms_modal=1"
+      title="Double-click to edit this artist"
+    {% endif %}
+  >
     <div class="artist-profile-top">
       <div class="artist-intro">
         <h1>{{ artist.name }}</h1>
@@ -27,11 +33,8 @@
         <nav class="artist-contents" aria-label="Artist page contents">
           <ul>
             <li><a href="#biography">Biography</a></li>
-            {% if solo_exhibitions %}
-              <li><a href="#solo-exhibitions">Solo exhibitions</a></li>
-            {% endif %}
-            {% if group_exhibitions %}
-              <li><a href="#group-exhibitions">Group exhibitions</a></li>
+            {% if projects %}
+              <li><a href="#exhibitions">Exhibitions</a></li>
             {% endif %}
             {% if artist.cv_url or artist.cv_file %}
               <li><a href="#cv">CV</a></li>
@@ -64,22 +67,11 @@
     </div>
 
     <div class="artist-profile-sections">
-      {% if solo_exhibitions %}
-        <section id="solo-exhibitions">
-          <h2>Solo exhibitions</h2>
+      {% if projects %}
+        <section id="exhibitions">
+          <h2>Exhibitions</h2>
           <ul class="project-list">
-            {% for project in solo_exhibitions %}
-              <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </section>
-      {% endif %}
-
-      {% if group_exhibitions %}
-        <section id="group-exhibitions">
-          <h2>Group exhibitions</h2>
-          <ul class="project-list">
-            {% for project in group_exhibitions %}
+            {% for project in projects %}
               <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
             {% endfor %}
           </ul>

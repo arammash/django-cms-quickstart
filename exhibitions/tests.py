@@ -41,6 +41,22 @@ class ArtistPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Alex Artist")
 
+    def test_artist_detail_exposes_admin_edit_area_in_frontend_edit_mode(self):
+        from django.contrib.auth import get_user_model
+
+        user = get_user_model().objects.create_superuser(
+            username="artist-editor",
+            email="artist-editor@example.com",
+            password="test-password",
+        )
+        self.client.force_login(user)
+
+        response = self.client.get(f"{self.artist.get_absolute_url()}?edit=on")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'data-frontend-edit-url="/admin/exhibitions/artist/')
+        self.assertContains(response, "Double-click to edit this artist")
+
     def test_artist_profile_sections_and_external_links_render(self):
         self.artist.bio = "A short artist biography."
         self.artist.website_url = "https://artist.example.com/"
@@ -73,8 +89,7 @@ class ArtistPageTests(TestCase):
             "Website",
             "Instagram",
             "Biography",
-            "Solo exhibitions",
-            "Group exhibitions",
+            "Exhibitions",
             "CV",
             "Explore",
             "Solo Exhibition",
@@ -82,6 +97,9 @@ class ArtistPageTests(TestCase):
             "Interview",
         ):
             self.assertContains(response, content)
+        self.assertNotContains(response, "Solo exhibitions")
+        self.assertNotContains(response, "Group exhibitions")
+        self.assertEqual(response.content.decode().count('id="exhibitions"'), 1)
 
     def test_artist_carousel_starts_with_hero_image(self):
         hero = FilerImage.objects.create(
