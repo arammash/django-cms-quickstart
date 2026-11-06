@@ -1,28 +1,47 @@
+@font-face {
+  font-family: "Public Sans";
+  src: url("fonts/PublicSans_Complete/Fonts/WEB/fonts/PublicSans-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Public Sans";
+  src: url("fonts/PublicSans_Complete/Fonts/WEB/fonts/PublicSans-VariableItalic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 body {
-  font-family: Georgia, serif;
+  font-family: "Public Sans", sans-serif;
   max-width: 70rem;
   margin: 2rem auto;
   padding: 0 1rem;
   line-height: 1.5;
-  background-color: #333;
-  color: #fff;
+  background-color: #04471a;
+  color: #ffffff;
 }
 h1 { 
-  font-family: "Michroma", sans-serif; 
+  font-family: "Public Sans", sans-serif;
   font-size: 2rem; 
+  font-weight: 300;
 }
 header { 
+  font-family: "Public Sans", sans-serif;
   display: flex; 
   justify-content: space-between; 
-  margin-bottom: 2rem; 
+  margin-bottom: 2rem;
 }
 nav ul { 
   list-style: none; 
   display: flex; 
   gap: 1rem; 
   margin: 0; 
-  padding: 0; 
-  font-family: Michroma, sans-serif; 
+  padding: 0;
+  font-size: 1rem;
+  font-family: "Public Sans", sans-serif;
 }
 nav > ul > li {
   position: relative;
@@ -154,7 +173,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   scroll-margin-top: 1rem;
 }
 .artist-profile-sections h2 {
-  font-family: "Michroma", sans-serif;
+  font-family: "Public Sans", sans-serif;
 }
 .image-gallery {
   margin: 2rem auto;
@@ -214,7 +233,7 @@ figcaption {
   text-align: center;
 }
 .exhibition-column h2 {
-  font-family: "Michroma", sans-serif;
+  font-family: "Public Sans", sans-serif;
 }
 .exhibition-column[aria-hidden="true"] {
   visibility: hidden;
@@ -222,7 +241,6 @@ figcaption {
 }
 a { 
   color: inherit; 
-  font-family: Georgia, serif;
 }
 img { 
   max-width: 100%; 
@@ -342,6 +360,13 @@ img {
 
 .michroma-regular {
   font-family: "Michroma", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.baskervville-regular {
+  font-family: "Baskervville", serif;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
