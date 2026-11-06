@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '<a string of random characters>')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pnb4uyal.up.railway.app', 'www.masharqa.com', 'masharqa.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'pnb4uyal.up.railway.app', 'pnb4uyal.up.railway.app', 'www.masharqa.com', 'masharqa.com']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://aram-masharqa-projects.onrender.com',
