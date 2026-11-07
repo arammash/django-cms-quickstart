@@ -100,10 +100,16 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 }
 .artist-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem 2rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   padding: 0;
   list-style: none;
+}
+.artists-page > h1 {
+  text-align: center;
+}
+.artist-list + .other-artist-list {
+  margin-top: 2rem;
 }
 .artist-list li {
   position: relative;
@@ -141,8 +147,29 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   outline: 2px solid currentColor;
   outline-offset: 0.2rem;
 }
+.artist-list [data-artist-id].is-highlighted,
 .other-artist-list [data-artist-id].is-highlighted {
   font-weight: 700;
+}
+.past-exhibition-clear {
+  margin-top: 0.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85em;
+  opacity: 0.75;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.past-exhibition-clear:hover,
+.past-exhibition-clear:focus-visible {
+  opacity: 1;
+}
+.past-exhibition-clear:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0.2rem;
 }
 .artist-hover-image {
   position: fixed;
@@ -161,6 +188,10 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   width: min(100%, 56rem);
   max-height: 75vh;
   object-fit: contain;
+}
+.artist-profile {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 300;
 }
 .artist-profile-top {
   display: grid;
@@ -188,18 +219,6 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 .artist-biography {
   margin-bottom: 1.5rem;
 }
-.artist-contents ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  padding: 0;
-  list-style: none;
-  font-family: Georgia, serif;
-}
-.artist-contents a {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
 .artist-gallery {
   min-width: 0;
   margin: 0;
@@ -214,6 +233,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 }
 .artist-profile-sections h2 {
   font-family: "Public Sans", sans-serif;
+  font-weight: 300;
 }
 .image-gallery {
   margin: 2rem auto;
@@ -270,6 +290,8 @@ figcaption {
 }
 .exhibition-page,
 .exhibition-detail {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 300;
   text-align: center;
 }
 .exhibition-column h2 {
@@ -427,90 +449,6 @@ img {
   font-family: "Faster One", system-ui;
   font-weight: 400;
   font-style: normal;
-}
-
-.ibm-plex-mono-thin {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.ibm-plex-mono-extralight {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.ibm-plex-mono-light {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.ibm-plex-mono-regular {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.ibm-plex-mono-medium {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.ibm-plex-mono-semibold {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.ibm-plex-mono-bold {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.ibm-plex-mono-thin-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.ibm-plex-mono-extralight-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 200;
-  font-style: italic;
-}
-
-.ibm-plex-mono-light-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.ibm-plex-mono-regular-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.ibm-plex-mono-medium-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.ibm-plex-mono-semibold-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 600;
-  font-style: italic;
-}
-
-.ibm-plex-mono-bold-italic {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 700;
-  font-style: italic;
 }
 
 .jacquard-12-regular {

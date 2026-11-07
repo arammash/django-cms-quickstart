@@ -7,22 +7,8 @@
 {% block content %}
 <main class="artists-page">
   <h1>Artists</h1>
-  <ul class="artist-list">
-    {% for artist in artists %}
-      <li>
-        <a href="{{ artist.get_absolute_url }}">
-          <span>{{ artist.name }}</span>
-          {% if artist.hero_image %}
-            <img class="artist-hover-image" src="{{ artist.hero_image.url }}" alt="" aria-hidden="true">
-          {% endif %}
-        </a>
-      </li>
-    {% empty %}
-      <li>No artists have been added yet.</li>
-    {% endfor %}
-  </ul>
 
-  <section class="artist-exhibitions" aria-label="Past exhibitions and other artists">
+  <section class="artist-exhibitions" aria-label="Past exhibitions and artists">
     <div>
       <ul class="past-exhibition-list">
         {% for exhibition in past_exhibitions %}
@@ -38,8 +24,27 @@
           <li>No past exhibitions.</li>
         {% endfor %}
       </ul>
+      <button
+        class="past-exhibition-clear"
+        type="button"
+        aria-label="Clear exhibition selection"
+      >clear</button>
     </div>
     <div>
+      <ul class="artist-list">
+        {% for artist in artists %}
+          <li data-artist-id="{{ artist.pk }}">
+            <a href="{{ artist.get_absolute_url }}">
+              <span>{{ artist.name }}</span>
+              {% if artist.hero_image %}
+                <img class="artist-hover-image" src="{{ artist.hero_image.url }}" alt="" aria-hidden="true">
+              {% endif %}
+            </a>
+          </li>
+        {% empty %}
+          <li>No artists have been added yet.</li>
+        {% endfor %}
+      </ul>
       <ul class="other-artist-list">
         {% for artist in other_artists %}
           <li data-artist-id="{{ artist.pk }}">{{ artist.name }}</li>

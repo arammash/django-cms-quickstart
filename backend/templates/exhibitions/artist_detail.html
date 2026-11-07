@@ -30,20 +30,6 @@
           {% if artist.bio %}{{ artist.bio|linebreaks }}{% endif %}
         </section>
 
-        <nav class="artist-contents" aria-label="Artist page contents">
-          <ul>
-            <li><a href="#biography">Biography</a></li>
-            {% if projects %}
-              <li><a href="#exhibitions">Exhibitions</a></li>
-            {% endif %}
-            {% if artist.cv_url or artist.cv_file %}
-              <li><a href="#cv">CV</a></li>
-            {% endif %}
-            {% if external_links %}
-              <li><a href="#explore">Explore</a></li>
-            {% endif %}
-          </ul>
-        </nav>
       </div>
 
       {% if carousel_images %}

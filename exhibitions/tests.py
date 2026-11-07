@@ -56,6 +56,14 @@ class ArtistPageTests(TestCase):
         self.assertContains(response, "Past Exhibition")
         self.assertContains(response, "Exhibition Only")
         self.assertContains(response, "Another Other Artist")
+        self.assertContains(response, f'data-artist-id="{self.artist.pk}"', html=False)
+        self.assertContains(response, 'aria-label="Clear exhibition selection"', html=False)
+        self.assertContains(response, ">clear</button>", html=False)
+        rendered = response.content.decode()
+        self.assertLess(
+            rendered.index(f'data-artist-id="{self.artist.pk}"'),
+            rendered.index(f'data-artist-id="{self.exhibition_only_artist.pk}"'),
+        )
         self.assertNotContains(response, "Future Exhibition")
         self.assertNotContains(response, 'href="/artists/exhibition-only/"')
         self.assertContains(
@@ -123,7 +131,6 @@ class ArtistPageTests(TestCase):
             "A short artist biography.",
             "Website",
             "Instagram",
-            "Biography",
             "Exhibitions",
             "CV",
             "Explore",
@@ -134,6 +141,10 @@ class ArtistPageTests(TestCase):
             self.assertContains(response, content)
         self.assertNotContains(response, "Solo exhibitions")
         self.assertNotContains(response, "Group exhibitions")
+        self.assertNotContains(response, 'href="#biography"', html=False)
+        self.assertNotContains(response, 'href="#exhibitions"', html=False)
+        self.assertNotContains(response, 'href="#cv"', html=False)
+        self.assertNotContains(response, 'href="#explore"', html=False)
         self.assertEqual(response.content.decode().count('id="exhibitions"'), 1)
 
     def test_artist_carousel_starts_with_hero_image(self):
