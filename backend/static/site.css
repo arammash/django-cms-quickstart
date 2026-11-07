@@ -108,6 +108,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 }
 .artists-page > h1 {
   text-align: center;
+  margin-top: 0;
 }
 .artists-page {
   display: flex;
@@ -118,7 +119,8 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 .artist-list,
 .other-artist-list {
   text-align: left;
-  transform: translateX(-3rem);
+  position: relative;
+  left: -3rem;
 }
 .artist-list + .other-artist-list {
   margin-top: 2rem;
@@ -136,7 +138,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 }
 .artist-exhibitions > *:first-child,
 .artist-exhibitions > * > *:first-child {
-  margin-top: 0 !important;
+  margin-top: 0 !important; 
   padding-top: 0 !important;
 }
 .past-exhibition-list,
@@ -199,6 +201,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 }
 .artist-hover-image.is-visible {
   display: block;
+  position: fixed;
 }
 .artist-hero-image {
   display: block;
@@ -323,6 +326,9 @@ figcaption {
 }
 .exhibition-page #future h2 {
   font-family: "Faster One", system-ui;
+}
+.exhibition-page #current h2 {
+  font-family: Michroma, sans-serif;
 }
 .exhibition-page #past h2 {
   font-family: "Jacquard 12", system-ui;
