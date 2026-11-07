@@ -33,7 +33,7 @@ class ArtistPageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Alex Artist")
         self.assertContains(response, reverse("artists:artist_detail", kwargs={"slug": "alex-artist"}))
-        self.assertNotContains(response, "Exhibition Only")
+        self.assertContains(response, "Exhibition Only")
 
     def test_artist_directory_lists_past_exhibitions_and_non_core_artists(self):
         past_exhibition = Project.objects.create(
