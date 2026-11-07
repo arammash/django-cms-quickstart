@@ -2,6 +2,7 @@
 {% load static %}
 {% block base_js %}
   <script src="{% static 'artist_hover.js' %}" defer></script>
+  <script src="{% static 'artist_exhibition_highlight.js' %}" defer></script>
 {% endblock %}
 {% block content %}
 <main class="artists-page">
@@ -20,5 +21,33 @@
       <li>No artists have been added yet.</li>
     {% endfor %}
   </ul>
+
+  <section class="artist-exhibitions" aria-label="Past exhibitions and other artists">
+    <div>
+      <ul class="past-exhibition-list">
+        {% for exhibition in past_exhibitions %}
+          <li>
+            <button
+              class="past-exhibition-button"
+              type="button"
+              data-artist-ids="{% for artist in exhibition.artists.all %}{{ artist.pk }}{% if not forloop.last %},{% endif %}{% endfor %}"
+              aria-pressed="false"
+            >{{ exhibition.title }}</button>
+          </li>
+        {% empty %}
+          <li>No past exhibitions.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+      <ul class="other-artist-list">
+        {% for artist in other_artists %}
+          <li data-artist-id="{{ artist.pk }}">{{ artist.name }}</li>
+        {% empty %}
+          <li>No other artists have been added yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
 </main>
 {% endblock %}

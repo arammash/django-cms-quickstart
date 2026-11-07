@@ -42,6 +42,15 @@ class ArtistList(ListView):
     def get_queryset(self):
         return Artist.objects.filter(is_core_artist=True)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        projects = Project.objects.filter(
+            type=Project.Type.EXHIBITION
+        ).prefetch_related("artists")
+        context["past_exhibitions"] = [project for project in projects if project.status == "past"]
+        context["other_artists"] = Artist.objects.filter(is_core_artist=False)
+        return context
+
 
 class ArtistDetail(DetailView):
     model = Artist

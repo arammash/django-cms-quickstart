@@ -70,6 +70,7 @@ nav .nav-dropdown {
   left: 0;
   min-width: 9rem;
   padding: 0.5rem 0;
+  border-radius: 0.5rem;
   background: rgb(255 255 255 / 95%);
   color: #222;
   box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 18%);
@@ -80,6 +81,7 @@ nav .nav-dropdown li {
 nav .nav-dropdown a {
   display: block;
   color: #222;
+  text-decoration: none;
 }
 nav .has-dropdown:hover > .nav-dropdown,
 nav .has-dropdown:focus-within > .nav-dropdown,
@@ -109,6 +111,38 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 .artist-list a {
   display: block;
   width: fit-content;
+}
+.artist-exhibitions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+.past-exhibition-list,
+.other-artist-list {
+  padding: 0;
+  list-style: none;
+}
+.past-exhibition-list li,
+.other-artist-list li {
+  margin-bottom: 0.5rem;
+}
+.past-exhibition-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.past-exhibition-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0.2rem;
+}
+.other-artist-list [data-artist-id].is-highlighted {
+  font-weight: 700;
 }
 .artist-hover-image {
   position: fixed;
@@ -295,6 +329,11 @@ img {
 
   .artist-list {
     grid-template-columns: 1fr;
+  }
+
+  .artist-exhibitions {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .artist-hover-image {

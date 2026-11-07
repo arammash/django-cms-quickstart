@@ -35,6 +35,41 @@ class ArtistPageTests(TestCase):
         self.assertContains(response, reverse("artists:artist_detail", kwargs={"slug": "alex-artist"}))
         self.assertNotContains(response, "Exhibition Only")
 
+    def test_artist_directory_lists_past_exhibitions_and_non_core_artists(self):
+        past_exhibition = Project.objects.create(
+            title="Past Exhibition",
+            slug="past-exhibition",
+            start_date="2000-01-01",
+            end_date="2000-02-01",
+        )
+        past_exhibition.artists.add(self.artist, self.exhibition_only_artist)
+        Project.objects.create(
+            title="Future Exhibition",
+            slug="future-exhibition",
+            start_date="2999-01-01",
+        )
+        other_artist = Artist.objects.create(name="Another Other Artist", slug="another-other")
+
+        response = self.client.get(reverse("artists:artist_list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Past Exhibition")
+        self.assertContains(response, "Exhibition Only")
+        self.assertContains(response, "Another Other Artist")
+        self.assertNotContains(response, "Future Exhibition")
+        self.assertNotContains(response, 'href="/artists/exhibition-only/"')
+        self.assertContains(
+            response,
+            f'data-artist-ids="{self.artist.pk},{self.exhibition_only_artist.pk}"',
+            html=False,
+        )
+        self.assertContains(
+            response,
+            f'data-artist-id="{self.exhibition_only_artist.pk}"',
+            html=False,
+        )
+        self.assertNotContains(response, f'data-artist-id="{self.artist.pk}"')
+
     def test_artist_detail_displays_artist_name(self):
         response = self.client.get(self.artist.get_absolute_url())
 
