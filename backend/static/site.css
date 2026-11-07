@@ -34,33 +34,32 @@ header {
   justify-content: space-between; 
   margin-bottom: 2rem;
 }
+.contact {
+  text-decoration: none;
+}
+nav a {
+  text-decoration: none;
+}
 nav ul { 
+  font-family: "Public Sans", sans-serif;
   list-style: none; 
   display: flex; 
   gap: 1rem; 
   margin: 0; 
   padding: 0;
   font-size: 1rem;
-  font-family: "Public Sans", sans-serif;
+  font-weight: 200;
 }
 nav > ul > li {
   position: relative;
 }
 .nav-dropdown-toggle {
   border: 0;
-  padding: 0.25rem;
+  padding: 0rem;
   background: transparent;
   color: inherit;
   cursor: pointer;
   vertical-align: middle;
-}
-.nav-dropdown-caret {
-  display: block;
-  width: 0;
-  height: 0;
-  border-top: 0.35rem solid currentColor;
-  border-right: 0.3rem solid transparent;
-  border-left: 0.3rem solid transparent;
 }
 nav .nav-dropdown {
   display: none;
@@ -102,33 +101,49 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  max-width: 40rem;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
 .artists-page > h1 {
   text-align: center;
 }
+.artists-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.artist-list,
+.other-artist-list {
+  text-align: left;
+  transform: translateX(-3rem);
+}
 .artist-list + .other-artist-list {
   margin-top: 2rem;
 }
-.artist-list li {
-  position: relative;
-}
 .artist-list a {
   display: block;
-  width: fit-content;
 }
 .artist-exhibitions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
   text-align: left;
+  align-items: start;
+  max-width: 80rem;
+  width: 100%;
+}
+.artist-exhibitions > *:first-child,
+.artist-exhibitions > * > *:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 .past-exhibition-list,
 .other-artist-list {
   padding: 0;
   list-style: none;
+  position: relative;
 }
 .past-exhibition-list li,
 .other-artist-list li {
@@ -142,6 +157,8 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   font: inherit;
   text-align: left;
   cursor: pointer;
+  font-weight: 200;
+  
 }
 .past-exhibition-button:focus-visible {
   outline: 2px solid currentColor;
