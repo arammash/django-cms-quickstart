@@ -120,7 +120,7 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
 .other-artist-list {
   text-align: left;
   position: relative;
-  left: -3rem;
+  left: -4rem;
 }
 .artist-list + .other-artist-list {
   margin-top: 2rem;

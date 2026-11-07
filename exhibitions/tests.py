@@ -130,7 +130,6 @@ class ArtistPageTests(TestCase):
             "A short artist biography.",
             "Website",
             "Instagram",
-            "Exhibitions",
             "CV",
             "Explore",
             "Solo Exhibition",
@@ -140,6 +139,7 @@ class ArtistPageTests(TestCase):
             self.assertContains(response, content)
         self.assertNotContains(response, "Solo exhibitions")
         self.assertNotContains(response, "Group exhibitions")
+        self.assertNotContains(response, "<h2>Exhibitions</h2>", html=False)
         self.assertNotContains(response, 'href="#biography"', html=False)
         self.assertNotContains(response, 'href="#exhibitions"', html=False)
         self.assertNotContains(response, 'href="#cv"', html=False)
