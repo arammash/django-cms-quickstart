@@ -223,28 +223,25 @@ nav .has-dropdown.dropdown-open > .nav-dropdown {
   text-align: left;
 }
 .artist-intro h1 {
-  margin-top: 0;
+  margin: 0;
 }
 .artist-social-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-.artist-social-links a {
-  padding: 0.35rem 0.75rem;
-  border: 1px solid currentColor;
-  text-decoration: none;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
 }
 .artist-biography {
   margin-bottom: 1.5rem;
+  margin-top: 0;
 }
 .artist-gallery {
   min-width: 0;
   margin: 0;
 }
 .artist-profile-sections {
-  margin-top: 3rem;
+  margin-top: 2rem;
   text-align: left;
 }
 .artist-profile-sections section {

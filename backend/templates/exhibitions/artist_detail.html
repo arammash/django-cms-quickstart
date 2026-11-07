@@ -18,10 +18,14 @@
         {% if artist.website_url or artist.instagram_url %}
           <div class="artist-social-links">
             {% if artist.website_url %}
-              <a href="{{ artist.website_url }}" target="_blank" rel="noopener noreferrer">Website</a>
+              <a href="{{ artist.website_url }}" target="_blank" rel="noopener noreferrer" aria-label="Website">
+                <img src="{% static 'globe.png' %}" alt="Website" width="60" height="60">
+              </a>
             {% endif %}
             {% if artist.instagram_url %}
-              <a href="{{ artist.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a href="{{ artist.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <img src="{% static 'Instagram_Glyph_Black.png' %}" alt="Instagram" width="40" height="40">
+              </a>
             {% endif %}
           </div>
         {% endif %}
@@ -61,7 +65,6 @@
     <div class="artist-profile-sections">
       {% if projects %}
         <section id="exhibitions">
-          <h2>Exhibitions</h2>
           <ul class="project-list">
             {% for project in projects %}
               <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>

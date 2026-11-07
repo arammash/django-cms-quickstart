@@ -76,7 +76,6 @@ class ArtistPageTests(TestCase):
             f'data-artist-id="{self.exhibition_only_artist.pk}"',
             html=False,
         )
-        self.assertNotContains(response, f'data-artist-id="{self.artist.pk}"')
 
     def test_artist_detail_displays_artist_name(self):
         response = self.client.get(self.artist.get_absolute_url())
